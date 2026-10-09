@@ -12,7 +12,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     networks:
-      - spring-mysql
+      - net-pract-java
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
@@ -26,14 +26,27 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     networks:
-      - spring-mysql
+      - net-pract-java
     ports:
       - 8080:8080
     depends_on:
       db:
         condition: service_healthy
+  frontend:
+    build:
+      context: frontend
+      target: development
+    ports:
+      - 5173:5173 
+    volumes:
+      - ./frontend/src:/code/src
+      - /project/node_modules
+    networks:
+      - net-pract-java
+    depends_on:
+      - backend
 
 volumes:
   db-data: {}
 networks:
-  spring-mysql: {}
+  net-pract-java: {}
