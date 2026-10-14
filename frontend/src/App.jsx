@@ -1,9 +1,10 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import PlayerCard from "./components/PlayerCard"
 
 async function reclutarPersonaje(personaje){
 
   try{
-    const response = await fetch("http://localhost:8080/")
+    const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/")
     if (!response.ok){throw new Error("No se ha podido reclutar el personaje.")}
     const data = await response.text();
     alert(`${personaje} reclutado\nRespuesta del backend: ${data}`);
@@ -15,32 +16,48 @@ async function reclutarPersonaje(personaje){
 
 
 function App() {
+    const {
+    isLoading, 
+    isAuthenticated
+
+  } = useAuth0();
 
   return (
     <>
-      <div className=" text-center text-xl font-bold my-4">Seleccione un personaje para reclutar</div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center gap-6">
-        <PlayerCard 
-          img_link={"src/assets/warrior.png"} 
-          title={"Guerrero"} 
-          description={"Muro de acero. Aguanta la primera línea y no retrocede."} 
-          badge_1={"Armadura"}
-          onClick = {()=>{reclutarPersonaje("Guerrero")}}
-          >
-        </PlayerCard>
-        <PlayerCard 
-          img_link={"src/assets/archer.png"}
-          title={"Arquero"} 
-          description={"Ojo de halcón. Golpea antes de que el enemigo lo vea."} 
-          badge_1={"Triple disparo"}
-          onClick = {()=>{reclutarPersonaje("Arquero")}}>          </PlayerCard>
-        <PlayerCard 
-          img_link={"src/assets/wizard.png"}           
-          title={"Mago"} 
-          description={"Maestro de lo arcano. Frágil de cuerpo, temible en hechizos."} 
-          badge_1={"Maná"}
-          onClick = {()=>{reclutarPersonaje("Mago")}}></PlayerCard>
-      </div>
+      {isLoading && (
+        <div className="w-full "><p className="justify-center text-center my-8 ">Cargando...</p></div>
+      
+      )}
+      {!isAuthenticated && (
+        <div className="w-full "><p className="justify-center text-center my-8 ">Inicie sesión para poder usar la aplicación</p></div>
+      )}
+      {(!isLoading && isAuthenticated) && (
+        <>
+          <div className=" text-center text-xl font-bold my-4">Seleccione un personaje para reclutar</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center gap-6">
+            <PlayerCard 
+              img_link={"src/assets/warrior.png"} 
+              title={"Guerrero"} 
+              description={"Muro de acero. Aguanta la primera línea y no retrocede."} 
+              badge_1={"Armadura"}
+              onClick = {()=>{reclutarPersonaje("Guerrero")}}
+              >
+            </PlayerCard>
+            <PlayerCard 
+              img_link={"src/assets/archer.png"}
+              title={"Arquero"} 
+              description={"Ojo de halcón. Golpea antes de que el enemigo lo vea."} 
+              badge_1={"Triple disparo"}
+              onClick = {()=>{reclutarPersonaje("Arquero")}}>          </PlayerCard>
+            <PlayerCard 
+              img_link={"src/assets/wizard.png"}           
+              title={"Mago"} 
+              description={"Maestro de lo arcano. Frágil de cuerpo, temible en hechizos."} 
+              badge_1={"Maná"}
+              onClick = {()=>{reclutarPersonaje("Mago")}}></PlayerCard>
+          </div>
+        </>
+      )}
     </>
   )
 }

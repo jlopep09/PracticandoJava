@@ -1,16 +1,49 @@
 import React from 'react'
+import LoginBtn from './LoginBtn'
+import LogoutBtn from './LogoutBtn'
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const Navbar = () => {
+
+   const {
+    isLoading,
+    isAuthenticated,
+    error,
+    loginWithRedirect: login,
+    logout: auth0Logout, 
+    user, 
+  } = useAuth0();
+
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
-        <a href='/' className="btn btn-ghost text-xl">PractJava</a>
+        <a href='/' className="btn btn-ghost text-xl">{import.meta.env.VITE_APP_NAME}</a>
       </div>
-      <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
-          <li className='hidden' ><a>Link</a></li>
-        </ul>
+      <div className="flex gap-2">
+    
+    {isAuthenticated &&(<div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+        <div className="w-10 rounded-full">
+          <img
+            alt="User icon"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        </div>
       </div>
+      <ul
+        tabIndex={-1}
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-40 p-2 shadow">
+        <li className='hidden'>
+          <a className="justify-between">
+            Profile
+            <span className="badge">New</span>
+          </a>
+        </li>
+        <li ><LogoutBtn></LogoutBtn></li>
+      </ul>
+    </div>)}
+    {!isAuthenticated &&(<LoginBtn></LoginBtn>)}
+  </div>
     </div>
   )
 }
