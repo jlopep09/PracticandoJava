@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import PlayerCard from "./components/PlayerCard"
+import { useAppUser } from "./hooks/appUser";
 
 async function reclutarPersonaje(personaje){
 
@@ -21,6 +22,12 @@ function App() {
     isAuthenticated
 
   } = useAuth0();
+
+  const {appUser} = useAppUser();
+
+  if (!appUser) {
+    return <p className="justify-center text-center my-8 ">No hay un perfil disponible.</p>;
+  }
 
   return (
     <>
