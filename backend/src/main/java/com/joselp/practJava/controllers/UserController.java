@@ -2,15 +2,15 @@ package com.joselp.practJava.controllers;
 
 import com.joselp.practJava.entity.User;
 import com.joselp.practJava.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 @RestController
@@ -33,6 +33,8 @@ public class UserController {
                 repository.findByExternalId(externalId);
 
         if (existingUser.isPresent()) {
+            existingUser.get().setLastLogin(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0)));
+            repository.save(existingUser.get());
             return ResponseEntity.ok(existingUser.get());
         }
 
@@ -40,7 +42,9 @@ public class UserController {
         newUser.setExternalId(externalId);
         newUser.setEmail(email);
         newUser.setUsername(username);
-
+        newUser.setCreatedAt(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0)));
+        newUser.setUpdatedAt(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0)));
+        newUser.setLastLogin(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0)));
         User savedUser = repository.save(newUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);

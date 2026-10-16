@@ -1,13 +1,5 @@
--- Tabla de saludos
-CREATE TABLE IF NOT EXISTS `greetings` (
-                                           `id` INT NOT NULL AUTO_INCREMENT,
-                                           `name` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
 -- Tabla de roles
-CREATE TABLE IF NOT EXISTS `Rol` (
+CREATE TABLE IF NOT EXISTS `rol` (
                                      `id` INT NOT NULL AUTO_INCREMENT,
                                      `name` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`id`)
@@ -15,13 +7,14 @@ CREATE TABLE IF NOT EXISTS `Rol` (
 
 
 -- Tabla de usuarios
-CREATE TABLE IF NOT EXISTS `User` (
-                                      `id` INT NOT NULL AUTO_INCREMENT,
-                                      `email` VARCHAR(300) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+      `id` INT NOT NULL AUTO_INCREMENT,
+      `email` VARCHAR(300) NOT NULL,
     `external_id` VARCHAR(300) DEFAULT NULL,
     `username` VARCHAR(300) NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `last_login` DATETIME
     ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_user_email` (`email`),
@@ -43,6 +36,6 @@ CREATE TABLE IF NOT EXISTS `User_Role` (
     ON DELETE CASCADE,
     CONSTRAINT `fk_user_role_rol`
     FOREIGN KEY (`rol_id`)
-    REFERENCES `Rol` (`id`)
+    REFERENCES Rol (`id`)
     ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

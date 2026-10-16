@@ -10,7 +10,7 @@ const LogoutBtn = () => {
 
 
   return (
-    <a className='w-full' onClick={logout}>Logout</a>
+    <a className='w-full' onClick={logout}>Cerrar sesión</a>
   )
 }
 

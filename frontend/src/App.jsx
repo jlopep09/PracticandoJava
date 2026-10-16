@@ -23,9 +23,9 @@ function App() {
 
   } = useAuth0();
 
-  const {appUser} = useAppUser();
+  const {appUser, isLoading: isAppUserLoading} = useAppUser();
 
-  if (!appUser) {
+  if (!appUser && !isAppUserLoading && isAuthenticated) {
     return <p className="justify-center text-center my-8 ">No hay un perfil disponible.</p>;
   }
 
@@ -35,7 +35,7 @@ function App() {
         <div className="w-full "><p className="justify-center text-center my-8 ">Cargando...</p></div>
       
       )}
-      {!isAuthenticated && (
+      {!isAuthenticated && !isAppUserLoading && (
         <div className="w-full "><p className="justify-center text-center my-8 ">Inicie sesión para poder usar la aplicación</p></div>
       )}
       {(!isLoading && isAuthenticated) && (

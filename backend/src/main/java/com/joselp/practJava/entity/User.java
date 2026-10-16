@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Entity
-@Table(name = "User")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,8 @@ public class User {
 
     @Column(name = "updated_at")
     private Instant updatedAt;
+    @Column(name = "last_login")
+    private Instant lastLogin;
 
     public Integer getId() {
         return id;
@@ -79,6 +81,14 @@ public class User {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Instant getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Instant lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
 }

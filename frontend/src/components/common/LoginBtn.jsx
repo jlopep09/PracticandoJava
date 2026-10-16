@@ -7,7 +7,7 @@ const LoginBtn = () => {
   } = useAuth0();
 
   return (
-    <button className='w-full btn btn-primary font-bold' onClick={login}>Login</button>
+    <button className='w-full btn btn-primary font-bold' onClick={login}>Registrarse</button>
   )
 }
 
