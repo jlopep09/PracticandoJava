@@ -7,7 +7,7 @@ const Footer = () => {
     <p>Oct 2026 - {new Date().getFullYear()} - Proyecto realizado en directos de youtube </p>
     <p className='flex'>
         <a className='text-accent' href="https://www.youtube.com/channel/UCGJGaakyDW8POp07m23smcA">@ChispyDev</a>
-        <p className='mx-2'>-</p>
+        <span className='mx-2'>-</span>
         <a className='text-secondary' href="https://github.com/jlopep09/PracticandoJava">Github</a>
         
     </p>
