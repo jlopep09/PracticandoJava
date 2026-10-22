@@ -1,1 +1,1 @@
-select count (*) from java_game_db.greetings;
+select count (*) from java_game_db.users;

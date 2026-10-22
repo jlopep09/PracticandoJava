@@ -1,5 +1,5 @@
 -- Tabla de roles
-CREATE TABLE IF NOT EXISTS `rol` (
+CREATE TABLE IF NOT EXISTS `role` (
                                      `id` INT NOT NULL AUTO_INCREMENT,
                                      `name` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`id`)
@@ -23,19 +23,19 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 
 -- Tabla intermedia de usuarios y roles
-CREATE TABLE IF NOT EXISTS `User_Role` (
-                                           `id` INT NOT NULL AUTO_INCREMENT,
-                                           `user_id` INT NOT NULL,
-                                           `rol_id` INT NOT NULL,
-                                           PRIMARY KEY (`id`),
-    UNIQUE KEY `uk_user_role` (`user_id`, `rol_id`),
-    KEY `idx_user_role_rol_id` (`rol_id`),
+CREATE TABLE IF NOT EXISTS `user_role` (
+       `id` INT NOT NULL AUTO_INCREMENT,
+       `user_id` INT NOT NULL,
+       `role_id` INT NOT NULL,
+       PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_user_role` (`user_id`, `role_id`),
+    KEY `idx_user_role_rol_id` (`role_id`),
     CONSTRAINT `fk_user_role_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES User (`id`)
+    REFERENCES users (`id`)
     ON DELETE CASCADE,
     CONSTRAINT `fk_user_role_rol`
-    FOREIGN KEY (`rol_id`)
-    REFERENCES Rol (`id`)
+    FOREIGN KEY (`role_id`)
+    REFERENCES role (`id`)
     ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -4,7 +4,5 @@ com\joselp\practJava\Application.class
 com\joselp\practJava\controllers\HomeController.class
 com\joselp\practJava\repository\UserRepository.class
 com\joselp\practJava\CorsConfig.class
-com\joselp\practJava\repository\GreetingRepository.class
 com\joselp\practJava\SecurityConfig.class
-com\joselp\practJava\entity\Greeting.class
 com\joselp\practJava\configuration\DockerSecretsProcessor.class

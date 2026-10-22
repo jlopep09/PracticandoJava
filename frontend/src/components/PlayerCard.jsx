@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PlayerCard = ({img_link, title, description, badge_1, badge_2, onClick}) => {
+const PlayerCard = ({img_link, title, description, badge_1, onClick}) => {
   return (
     <div className="card border border-neutral/20 bg-base-100 w-96 hover:shadow-md shadow-neutral/30 transition-all duration-300 ease-in-out hover:zoom-99" onClick={onClick}>
         <figure>
@@ -17,9 +17,7 @@ const PlayerCard = ({img_link, title, description, badge_1, badge_2, onClick}) =
             {badge_1 && (
                 <div className="badge badge-outline">{badge_1}</div>
             )}
-            {badge_2 && (
-                <div className="badge badge-outline">{badge_2}</div>
-            )}
+            
             </div>
         </div>
     </div>
