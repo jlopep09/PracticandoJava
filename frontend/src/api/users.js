@@ -1,11 +1,11 @@
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-export async function syncUser(accessToken, externalId, email, username) {
+export async function syncUser(accessToken, email, username) {
     const params = new URLSearchParams({
-        externalId,
         email,
-        username,
+        username
     });
+    
 
     const response = await fetch(`${API_URL}/v1/users/sync?${params}`, {
         method: "POST",

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import PlayerCard from '../PlayerCard'
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const HeroesGrid = () => {
     const [heroes_list, setHeroes_list] = useState([])
-
+    const {getAccessTokenSilently} = useAuth0();
     useEffect(()=>{
         async function getHeroesTypes(){
             try{
@@ -18,15 +19,29 @@ export const HeroesGrid = () => {
         }
         getHeroesTypes()
     
-    },[heroes_list]);
+    },[]);
 
 
-    async function reclutarPersonaje(personaje){
+    async function reclutarPersonaje(hero_type){
         try{
-            const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/")
+            const accessToken = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+                },
+            });
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/v1/heroes/?heroType=" + hero_type+"", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${accessToken}`
+                },
+                body: JSON.stringify({
+                    heroType: hero_type
+                })
+            });
             if (!response.ok){throw new Error("No se ha podido reclutar el personaje.")}
             const data = await response.text();
-            alert(`${personaje} reclutado\nRespuesta del backend: ${data}`);
+            alert(`Personaje reclutado\nRespuesta del backend: ${data}`);
         }catch(error){
             alert(error.msg)
         }
@@ -42,7 +57,7 @@ export const HeroesGrid = () => {
                     title={hero.name} 
                     description={hero.description} 
                     badge_1={hero.badge}
-                    onClick = {()=>{reclutarPersonaje(hero.title)}}
+                    onClick = {()=>{reclutarPersonaje(hero.id)}}
                ></PlayerCard>))}
               </>
   )

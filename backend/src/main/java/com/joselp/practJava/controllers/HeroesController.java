@@ -1,5 +1,6 @@
 package com.joselp.practJava.controllers;
 
+import com.joselp.practJava.dto.UserHeroeDTO;
 import com.joselp.practJava.entity.Hero;
 import com.joselp.practJava.entity.User;
 import com.joselp.practJava.entity.UserHeroe;
@@ -8,6 +9,8 @@ import com.joselp.practJava.repository.UserHeroeRepository;
 import com.joselp.practJava.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,19 +30,23 @@ public class HeroesController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<UserHeroe> addHeroeToUser(@RequestParam Integer userId, @RequestParam Integer heroType ){
+    public ResponseEntity<UserHeroeDTO> addHeroeToUser(@RequestParam Integer heroType , @AuthenticationPrincipal Jwt jwt){
+
+        String externalId = jwt.getClaimAsString("sub");
+
         UserHeroe uh = new UserHeroe();
         Optional<Hero> selectedHero = hr.findById(heroType);
         if (selectedHero.isPresent()){
             uh.setHeroeType(selectedHero.get());
         }
-        Optional<User> selectedUser = ur.findById(userId);
+        Optional<User> selectedUser = ur.findByExternalId(externalId);
         if (selectedUser.isPresent()){
             uh.setUser(selectedUser.get());
         }
 
         uh = uhr.save(uh);
-        return ResponseEntity.status(HttpStatus.OK).body(uh);
+        UserHeroeDTO result = new UserHeroeDTO(uh.getId(), uh.getUser().getId(), uh.getHeroeType().getId(), uh.getIsActive());
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @GetMapping("/types")

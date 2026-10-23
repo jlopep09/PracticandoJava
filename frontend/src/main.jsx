@@ -3,21 +3,34 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import CommonLayout from './components/common/CommonLayout.jsx'
+import { BrowserRouter, Routes, Route } from "react-router";
 import { Auth0Provider } from "@auth0/auth0-react";
+import Page404 from './components/common/Page404.jsx'
+
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Auth0Provider
-      domain={import.meta.env.VITE_AUTH0_DOMAIN}
-      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-        audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-      }}
-    >
-      <CommonLayout>
-        <App />
-      </CommonLayout>
-    </Auth0Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={
+            <Auth0Provider
+              domain={import.meta.env.VITE_AUTH0_DOMAIN}
+              clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+              authorizationParams={{
+                redirect_uri: window.location.origin,
+                audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+              }}
+            >
+              <CommonLayout>
+                <App />
+              </CommonLayout>
+            </Auth0Provider>
+          } />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+        
+
+     </BrowserRouter>
   </StrictMode>,
 )

@@ -4,6 +4,8 @@ import com.joselp.practJava.entity.User;
 import com.joselp.practJava.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,10 +32,10 @@ public class UserController {
 
     @PostMapping("/sync")
     public ResponseEntity<User> syncUser(
-            @RequestParam String externalId,
             @RequestParam String email,
-            @RequestParam String username) {
-
+            @RequestParam String username,
+            @AuthenticationPrincipal Jwt jwt) {
+        String externalId = jwt.getClaimAsString("sub");
         Optional<User> existingUser =
                 repository.findByExternalId(externalId);
 

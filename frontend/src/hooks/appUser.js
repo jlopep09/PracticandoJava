@@ -38,7 +38,7 @@ export function useAppUser() {
           },
         });
 
-        const profile = await syncUser(accessToken, user?.sub, user?.email, user?.name);
+        const profile = await syncUser(accessToken, user?.email, user?.name);
 
         if (!cancelled) {
           setAppUser(profile);
