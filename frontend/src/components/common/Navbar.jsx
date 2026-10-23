@@ -2,6 +2,7 @@ import React from 'react'
 import LoginBtn from './LoginBtn'
 import LogoutBtn from './LogoutBtn'
 import { useAuth0 } from '@auth0/auth0-react';
+import { Link } from 'react-router';
 
 export const Navbar = () => {
 
@@ -35,11 +36,14 @@ export const Navbar = () => {
       <ul
         tabIndex={-1}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-40 p-2 shadow">
-        <li className='hidden'>
-          <a className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </a>
+        <li className=''>
+          <Link to={"/profile"}>
+            <a className="justify-between">
+              Profile
+              
+            </a>
+          </Link>
+          
         </li>
         <li ><LogoutBtn></LogoutBtn></li>
       </ul>

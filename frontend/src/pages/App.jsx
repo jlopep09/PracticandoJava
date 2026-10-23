@@ -1,7 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import PlayerCard from "./components/PlayerCard"
-import { useAppUser } from "./hooks/appUser";
-import { HeroesGrid } from "./components/App/HeroesGrid";
+import { useAppUser } from "./../hooks/appUser";
+import { HeroesGrid } from "./../components/App/HeroesGrid";
 
 
 
