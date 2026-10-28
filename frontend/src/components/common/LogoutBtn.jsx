@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
-const LogoutBtn = () => {
+const LogoutBtn = ({IsBtn}) => {
     const {
     logout: auth0Logout, 
   } = useAuth0();
@@ -10,7 +10,14 @@ const LogoutBtn = () => {
 
 
   return (
-    <a className='w-full' onClick={logout}>Cerrar sesión</a>
+    <>
+      {!IsBtn && (
+        <a className='w-full' onClick={logout}>Cerrar sesión</a>
+      )}
+      {IsBtn && (
+        <button className='w-full btn btn-primary' onClick={logout}>Cerrar sesión</button>
+      )}
+    </>
   )
 }
 
