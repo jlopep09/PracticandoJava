@@ -7,9 +7,11 @@ const CommonLayout = ({children}) => {
     <>
         <div className='flex flex-col justify-between min-h-lvh'>
           <Navbar></Navbar>
-          <div className='block w-full max-w-7xl '>
+          <div className='flex flex-row w-full justify-center'>
+            <div className='block w-full max-w-7xl '>
               {children}
             </div>
+          </div>
           <Footer> </Footer>
         </div>
     </>
